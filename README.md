@@ -1,2 +1,2 @@
 # CreditCardApproval-ML
-Weather updates 
+Credit card approval for applicants using different ML scoring algorithms
