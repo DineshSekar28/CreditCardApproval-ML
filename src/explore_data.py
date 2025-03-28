@@ -39,7 +39,7 @@ def summarize_data(df):
     std_devs = numerical_columns.std()
     variance_threshold = 1e-8  # Avoid division by near-zero variance
     valid_columns = std_devs[std_devs > variance_threshold].index
-    filtered_numerical_columns = numerical_columns[valid_columns]
+    filtered_numerical_columns = numerical_columns[valid_columns].drop(columns=["ID"], errors="ignore")
 
     print("\n📌 Outlier count per column (Z-Score > 3):")
 
