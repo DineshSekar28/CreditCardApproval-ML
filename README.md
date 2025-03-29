@@ -113,7 +113,7 @@ Interactive visualizations built with Tableau to explore key patterns:
 ## 🤖 Machine Learning Workflow
 
 - Setup done via **PyCaret**
-- Ignored: `ID`, `CREDIT_SCORE`, `RISK_LEVEL`
+- Ignored: `ID`, `CREDIT_SCORE`
 - Enabled: Feature selection, multicollinearity removal
 - Models trained: LightGBM, CatBoost, XGBoost, Logistic Regression, etc.
 - Tuning: Used `tune_model()` to optimize hyperparameters (F1 Score)
