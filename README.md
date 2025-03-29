@@ -1,108 +1,132 @@
 # 💳 Credit Card Approval Prediction
 
-This project uses supervised machine learning techniques to predict whether a credit card application should be approved based on applicant information such as income, education, employment, family status, and more. The pipeline includes end-to-end preprocessing, custom credit scoring, AutoML modeling with PyCaret, and evaluation.
+A comprehensive project to build a credit card approval prediction system using machine learning, domain-driven credit scoring, and AutoML. The solution includes complete data preprocessing, synthetic target generation, exploratory data analysis, model selection via PyCaret, and performance evaluation.
 
 ---
 
-## 📌 Project Objective
+## 📚 Table of Contents
 
-Credit card issuers need robust, fast, and explainable systems to assess the creditworthiness of applicants. This project simulates that process using rule-based credit scoring and machine learning to predict approval (`TARGET = 1`) or rejection (`TARGET = 0`).
+1. [Project Objective](#project-objective)
+2. [Initial Hypotheses](#initial-hypotheses)
+3. [Dataset Overview](#dataset-overview)
+4. [Data Preprocessing](#data-preprocessing)
+5. [Custom Credit Scoring](#custom-credit-scoring)
+6. [Exploratory Data Analysis (EDA)](#exploratory-data-analysis-eda)
+7. [Data Visualization (Tableau)](#data-visualization-tableau)
+8. [Machine Learning Workflow](#machine-learning-workflow)
+9. [Model Performance](#model-performance)
+10. [Technologies Used](#technologies-used)
+
+---
+
+## 🎯 Project Objective
+
+Credit institutions need efficient and reliable ways to assess credit card applications. This project builds a predictive system using custom scoring logic, domain features, and AutoML to simulate approval decisions (`TARGET = 1`) or rejections (`TARGET = 0`).
 
 ---
 
 ## 🧪 Initial Hypotheses
 
-- Applicants with **higher income**, **stable job types**, and **higher education levels** are more likely to be approved.
-- Larger families (more dependents) may indicate higher risk.
-- Housing type and property ownership may influence approval odds.
+- Higher income and higher education positively affect approval chances.
+- Owning property and having fewer dependents signals financial stability.
+- Unusual employment patterns or housing types (e.g., office apartments) may indicate higher risk.
 
 ---
 
-## 🗂 Dataset Features
+## 📂 Dataset Overview
 
-| Feature               | Description                                 |
-|----------------------|---------------------------------------------|
-| `AMT_INCOME_TOTAL`    | Applicant's annual income                   |
-| `NAME_INCOME_TYPE`    | Type of income (e.g., Working, Pensioner)   |
-| `NAME_EDUCATION_TYPE` | Education level                             |
-| `NAME_HOUSING_TYPE`   | Housing status                              |
-| `DAYS_BIRTH`          | Negative days since birth (used to calculate age) |
-| `DAYS_EMPLOYED`       | Negative days employed (used to calculate work experience) |
-| `FLAG_OWN_CAR`        | Owns a car (Y/N)                            |
-| `FLAG_OWN_REALTY`     | Owns real estate (Y/N)                      |
-| `CNT_CHILDREN`        | Number of children                          |
-| `CNT_FAM_MEMBERS`     | Total family size                           |
-| `OCCUPATION_TYPE`     | Applicant's profession                      |
+The dataset includes demographic, financial, and employment-related attributes of credit card applicants.
+
+| Feature               | Description                                      |
+|----------------------|--------------------------------------------------|
+| `AMT_INCOME_TOTAL`    | Annual income                                   |
+| `NAME_INCOME_TYPE`    | Income type (Working, State servant, etc.)       |
+| `NAME_EDUCATION_TYPE` | Level of education                              |
+| `NAME_HOUSING_TYPE`   | Housing status                                   |
+| `DAYS_BIRTH`          | Days since birth (negative)                     |
+| `DAYS_EMPLOYED`       | Days employed (negative; capped at 365243)      |
+| `CNT_CHILDREN`        | Number of children                              |
+| `CNT_FAM_MEMBERS`     | Family size                                     |
+| `FLAG_OWN_CAR`        | Owns a car (Y/N)                                |
+| `FLAG_OWN_REALTY`     | Owns real estate (Y/N)                          |
+| `OCCUPATION_TYPE`     | Job type                                       |
 
 ---
 
-## 🧠 Data Processing Pipeline
+## 🔧 Data Preprocessing
 
-### ✅ Preprocessing
-- Converted birth and employment days into `AGE` and `WORK_EXPERIENCE` in years
-- Replaced placeholder employment values (e.g., `365243`) with the median of negative values
-- Filled missing `OCCUPATION_TYPE` with `'NA'`
+- Converted `DAYS_BIRTH` and `DAYS_EMPLOYED` to `AGE` and `WORK_EXPERIENCE` (years)
+- Replaced invalid employment durations (365243) with median of negative values
+- Filled missing `OCCUPATION_TYPE` with "NA"
+- Cleaned categorical values by removing special characters and normalizing spaces (for encoding compatibility)
 
-### ✅ Custom Credit Scoring
-A scoring system was created based on:
+---
 
-- **Income** (bucketed every 100k with max score = 5)
-- **Education** (Academic degree = 4 → Lower secondary = 0)
-- **Income Type**
-- **Housing Type**
-- **Family Size** (Penalty beyond 4 members)
-- **Asset Ownership (Car/Realty)**
-- **Work Experience and Age Brackets**
+## 🧠 Custom Credit Scoring
 
-> The final score was stored in the `CREDIT_SCORE` column.  
-> Top 60% were labeled `TARGET = 1` (approved); rest as `TARGET = 0`.  
-> Random label noise was introduced to simulate real-world inconsistencies.
+A rule-based scoring engine was developed using domain knowledge.
+
+**Scoring Components:**
+
+- **Income Score**: Buckets of 100K up to 500K (score capped at 5)
+- **Education Score**: 0 to 4 scale (Lower secondary to Academic degree)
+- **Income Type Score**: Highest for "State servant", lowest for "Student"
+- **Housing Type Score**: Based on property ownership or stability
+- **Family Size Score**: Score drops if family size > 4
+- **Work Experience & Age Bracket Score**: Age and experience grouped into brackets
+- **Asset Ownership**: Bonus points for car/realty owners
+
+The final `CREDIT_SCORE` was computed by summing all component scores.
+
+**Target Assignment:**
+- Top 60% of scores labeled `TARGET = 1`
+- Bottom 40% labeled `TARGET = 0`
+- Minor noise introduced to simulate approval anomalies
 
 ---
 
 ## 📊 Exploratory Data Analysis (EDA)
 
-- **Income** and **education level** show strong positive correlation with approval
-- Most applicants are between **25–60 years old**
-- **Pensioners** tend to have unrealistic employment durations (cleaned)
-- Applicants living in **rented** or **office apartments** tend to have lower approval scores
+- Income distribution skewed toward lower buckets (<200K)
+- Majority of applicants fall between ages 25 and 60
+- Pensioners showed inflated employment days (cleaned)
+- Education and income positively correlated with approval
+- Office apartment dwellers and large families show lower approval likelihood
 
 ---
 
-## 📊 Data Visualizations
-Data Visualizations to find the primary relationship between approval and the existing customer features. The processed data after scoring the Target approval values is represented in the below charts generated using Tableau to get a visual perspective.
+## 📉 Data Visualization (Tableau)
 
-- **Income** and **Age** correlation with approval of credit card visualized.
+Interactive visualizations built with Tableau to explore key patterns:
 
-![Screenshot 2025-03-29 141112](https://github.com/user-attachments/assets/07f1e0b9-6ded-476e-b665-e5c71b201ac0)
+- Approval breakdown by income bucket (side-by-side bar chart)
+- Approval vs. Age/Work Experience (scatter & heatmaps)
+- Education level and occupation type vs approval status
+- Percent approval trends by housing and income type
 
-- The Bar-graph along with trendline displays the correlation.
-![Screenshot 2025-03-29 163459](https://github.com/user-attachments/assets/b8f18b2c-369c-42b9-b79f-220ac952dd1f)
+> ![Income vs Approval Chart](https://github.com/user-attachments/assets/07f1e0b9-6ded-476e-b665-e5c71b201ac0)
 
-
----
-
-## 🤖 Machine Learning Approach
-
-### ✔ Tools Used
-- **PyCaret** (for automated model training and comparison)
-- **scikit-learn** (for metrics and testing)
-- **SHAP** (for model interpretability)
-
-### ✔ AutoML Setup
-- Target: `TARGET`
-- Ignored columns: `ID`, `CREDIT_SCORE`, `RISK_LEVEL`
-- 3-fold cross-validation
-- Feature selection and multicollinearity removal enabled
-- Top models tuned using `tune_model()`
+> ![Trend by Age and Income](https://github.com/user-attachments/assets/b8f18b2c-369c-42b9-b79f-220ac952dd1f)
 
 ---
 
-## 📈 Model Comparison
+## 🤖 Machine Learning Workflow
+
+- Setup done via **PyCaret**
+- Ignored: `ID`, `CREDIT_SCORE`, `RISK_LEVEL`
+- Enabled: Feature selection, multicollinearity removal
+- Models trained: LightGBM, CatBoost, XGBoost, Logistic Regression, etc.
+- Tuning: Used `tune_model()` to optimize hyperparameters (F1 Score)
+- Final model: User-selected model (not necessarily AutoML winner)
+- Evaluation: Predictions made on hold-out test set
+
+---
+
+## 🧪 Model Performance
 
 | Model                         | Accuracy | AUC   | Recall | Precision | F1 Score | MCC   | Kappa | Time (s) |
 |------------------------------|----------|-------|--------|-----------|----------|-------|--------|----------|
-| CatBoost Classifier          | **0.8482** | 0.814 | **0.9325** | 0.8483    | **0.8884** | 0.6598 | 0.6527 | 24.01    |
+| **CatBoost Classifier**      | **0.8482** | 0.814 | **0.9325** | 0.8483    | **0.8884** | 0.6598 | 0.6527 | 24.01    |
 | LightGBM                     | 0.8475   | 0.813 | 0.9323 | 0.8476    | 0.8879   | 0.6582 | 0.6510 | 1.90     |
 | XGBoost                      | 0.8473   | 0.814 | 0.9324 | 0.8474    | 0.8878   | 0.6579 | 0.6506 | 2.60     |
 | Gradient Boosting            | 0.8360   | 0.813 | 0.9340 | 0.8331    | 0.8807   | 0.6316 | 0.6211 | 13.49    |
@@ -110,8 +134,24 @@ Data Visualizations to find the primary relationship between approval and the ex
 | Logistic Regression          | 0.7895   | 0.796 | 0.9209 | 0.7894    | 0.8501   | 0.5210 | 0.5038 | 11.70    |
 | Dummy Classifier (baseline)  | 0.6480   | 0.500 | 1.0000 | 0.6480    | 0.7864   | 0.0000 | 0.0000 | 1.17     |
 
-✅ **CatBoost** performed best overall.  
-✅ **LightGBM** was nearly as good and faster.  
-✅ Dummy classifier confirms class imbalance (always predicts majority class).
+---
+
+## 🛠 Technologies Used
+
+- **Python 3.10**
+- **PyCaret 3.x**
+- **scikit-learn**
+- **pandas / numpy**
+- **Tableau Public** (for dashboarding)
+- **LightGBM / CatBoost / XGBoost**
 
 ---
+
+## 📌 Conclusion
+
+This project simulates a real-world credit approval pipeline using domain logic, clean preprocessing, robust visualization, and AutoML. By building both a **credit scoring engine** and a **predictive model**, the project ensures interpretability and accuracy — both critical in financial services.
+
+**Next Steps:**
+- Deploy model as REST API or Streamlit App
+- Integrate dashboard for real-time analysis
+- Monitor model performance over time using SHAP and drift detection
