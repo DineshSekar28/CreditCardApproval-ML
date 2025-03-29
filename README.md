@@ -1,90 +1,104 @@
-# Credit Card Approval Prediction
+# 💳 Credit Card Approval Prediction
 
-## Overview
+This project uses supervised machine learning techniques to predict whether a credit card application should be approved based on applicant information such as income, education, employment, family status, and more. The pipeline includes end-to-end preprocessing, custom credit scoring, AutoML modeling with PyCaret, and evaluation.
 
-This project aims to predict credit card approval decisions using machine learning techniques. By analyzing various applicant features such as income, education, and family status, the model assists in effective customer evaluation, thereby minimizing the risk of non-repayment.
+---
 
-## Table of Contents
+## 📌 Project Objective
 
-1. [Project Information](#project-information)
-2. [Initial Hypotheses](#initial-hypotheses)
-3. [Data Analysis Approach](#data-analysis-approach)
-4. [Exploratory Data Analysis (EDA) Findings](#exploratory-data-analysis-eda-findings)
-5. [Machine Learning Approach](#machine-learning-approach)
-6. [Model Comparison](#model-comparison)
+Credit card issuers need robust, fast, and explainable systems to assess the creditworthiness of applicants. This project simulates that process using rule-based credit scoring and machine learning to predict approval (`TARGET = 1`) or rejection (`TARGET = 0`).
 
-## Project Information
+---
 
-### Importance of the Proposal
+## 🧪 Initial Hypotheses
 
-- **Digital Financial Transactions:** With the rise in digital financial activities, efficient credit assessment has become crucial to handle complex data and ensure secure transactions.&#8203;:contentReference[oaicite:0]{index=0}
+- Applicants with **higher income**, **stable job types**, and **higher education levels** are more likely to be approved.
+- Larger families (more dependents) may indicate higher risk.
+- Housing type and property ownership may influence approval odds.
 
-- **Risk Mitigation:** :contentReference[oaicite:1]{index=1}&#8203;:contentReference[oaicite:2]{index=2}
+---
 
-### Impact on the Banking Sector
+## 🗂 Dataset Features
 
-- **Customer Acquisition:** :contentReference[oaicite:3]{index=3}&#8203;:contentReference[oaicite:4]{index=4}
+| Feature               | Description                                 |
+|----------------------|---------------------------------------------|
+| `AMT_INCOME_TOTAL`    | Applicant's annual income                   |
+| `NAME_INCOME_TYPE`    | Type of income (e.g., Working, Pensioner)   |
+| `NAME_EDUCATION_TYPE` | Education level                             |
+| `NAME_HOUSING_TYPE`   | Housing status                              |
+| `DAYS_BIRTH`          | Negative days since birth (used to calculate age) |
+| `DAYS_EMPLOYED`       | Negative days employed (used to calculate work experience) |
+| `FLAG_OWN_CAR`        | Owns a car (Y/N)                            |
+| `FLAG_OWN_REALTY`     | Owns real estate (Y/N)                      |
+| `CNT_CHILDREN`        | Number of children                          |
+| `CNT_FAM_MEMBERS`     | Total family size                           |
+| `OCCUPATION_TYPE`     | Applicant's profession                      |
 
-- **Risk Management:** :contentReference[oaicite:5]{index=5}&#8203;:contentReference[oaicite:6]{index=6}
+---
 
-- **Customer Satisfaction:** :contentReference[oaicite:7]{index=7}&#8203;:contentReference[oaicite:8]{index=8}
+## 🧠 Data Processing Pipeline
 
-## Initial Hypotheses
+### ✅ Preprocessing
+- Converted birth and employment days into `AGE` and `WORK_EXPERIENCE` in years
+- Replaced placeholder employment values (e.g., `365243`) with the median of negative values
+- Filled missing `OCCUPATION_TYPE` with `'NA'`
 
-1. **Income Type Influence:** :contentReference[oaicite:9]{index=9}&#8203;:contentReference[oaicite:10]{index=10}
+### ✅ Custom Credit Scoring
+A scoring system was created based on:
 
-2. **Education Level Impact:** :contentReference[oaicite:11]{index=11}&#8203;:contentReference[oaicite:12]{index=12}
+- **Income** (bucketed every 100k with max score = 5)
+- **Education** (Academic degree = 4 → Lower secondary = 0)
+- **Income Type**
+- **Housing Type**
+- **Family Size** (Penalty beyond 4 members)
+- **Asset Ownership (Car/Realty)**
+- **Work Experience and Age Brackets**
 
-3. **Family Size Consideration:** :contentReference[oaicite:13]{index=13}&#8203;:contentReference[oaicite:14]{index=14}
+> The final score was stored in the `CREDIT_SCORE` column.  
+> Top 60% were labeled `TARGET = 1` (approved); rest as `TARGET = 0`.  
+> Random label noise was introduced to simulate real-world inconsistencies.
 
-4. **Housing Situation:** :contentReference[oaicite:15]{index=15}&#8203;:contentReference[oaicite:16]{index=16}
+---
 
-## Data Analysis Approach
+## 📊 Exploratory Data Analysis (EDA)
 
-1. **Data Cleaning:** :contentReference[oaicite:17]{index=17}&#8203;:contentReference[oaicite:18]{index=18}
+- **Income** and **education level** show strong positive correlation with approval
+- Most applicants are between **25–60 years old**
+- **Pensioners** tend to have unrealistic employment durations (cleaned)
+- Applicants living in **rented** or **office apartments** tend to have lower approval scores
 
-2. **Feature Engineering:** :contentReference[oaicite:19]{index=19}&#8203;:contentReference[oaicite:20]{index=20}
+---
 
-3. **Encoding Categorical Variables:** :contentReference[oaicite:21]{index=21}&#8203;:contentReference[oaicite:22]{index=22}
+## 🤖 Machine Learning Approach
 
-4. **Credit Scoring:** :contentReference[oaicite:23]{index=23}&#8203;:contentReference[oaicite:24]{index=24}
+### ✔ Tools Used
+- **PyCaret** (for automated model training and comparison)
+- **scikit-learn** (for metrics and testing)
+- **SHAP** (for model interpretability)
 
-5. **Target Variable Creation:** :contentReference[oaicite:25]{index=25}&#8203;:contentReference[oaicite:26]{index=26}
+### ✔ AutoML Setup
+- Target: `TARGET`
+- Ignored columns: `ID`, `CREDIT_SCORE`, `RISK_LEVEL`
+- 3-fold cross-validation
+- Feature selection and multicollinearity removal enabled
+- Top models tuned using `tune_model()`
 
-## Exploratory Data Analysis (EDA) Findings
+---
 
-- **Income Distribution:** :contentReference[oaicite:27]{index=27}&#8203;:contentReference[oaicite:28]{index=28}
+## 📈 Model Comparison
 
-- **Education Levels:** :contentReference[oaicite:29]{index=29}&#8203;:contentReference[oaicite:30]{index=30}
+| Model                         | Accuracy | AUC   | Recall | Precision | F1 Score | MCC   | Kappa | Time (s) |
+|------------------------------|----------|-------|--------|-----------|----------|-------|--------|----------|
+| CatBoost Classifier          | **0.8482** | 0.814 | **0.9325** | 0.8483    | **0.8884** | 0.6598 | 0.6527 | 24.01    |
+| LightGBM                     | 0.8475   | 0.813 | 0.9323 | 0.8476    | 0.8879   | 0.6582 | 0.6510 | 1.90     |
+| XGBoost                      | 0.8473   | 0.814 | 0.9324 | 0.8474    | 0.8878   | 0.6579 | 0.6506 | 2.60     |
+| Gradient Boosting            | 0.8360   | 0.813 | 0.9340 | 0.8331    | 0.8807   | 0.6316 | 0.6211 | 13.49    |
+| Random Forest                | 0.8101   | 0.803 | 0.8860 | 0.8319    | 0.8581   | 0.5747 | 0.5721 | 12.93    |
+| Logistic Regression          | 0.7895   | 0.796 | 0.9209 | 0.7894    | 0.8501   | 0.5210 | 0.5038 | 11.70    |
+| Dummy Classifier (baseline)  | 0.6480   | 0.500 | 1.0000 | 0.6480    | 0.7864   | 0.0000 | 0.0000 | 1.17     |
 
-- **Family Size:** :contentReference[oaicite:31]{index=31}&#8203;:contentReference[oaicite:32]{index=32}
+✅ **CatBoost** performed best overall.  
+✅ **LightGBM** was nearly as good and faster.  
+✅ Dummy classifier confirms class imbalance (always predicts majority class).
 
-- **Housing Type:** :contentReference[oaicite:33]{index=33}&#8203;:contentReference[oaicite:34]{index=34}
-
-## Machine Learning Approach
-
-1. **Data Splitting:** :contentReference[oaicite:35]{index=35}&#8203;:contentReference[oaicite:36]{index=36}
-
-2. **Model Selection:** :contentReference[oaicite:37]{index=37}&#8203;:contentReference[oaicite:38]{index=38}
-
-3. **Evaluation Metrics:** :contentReference[oaicite:39]{index=39}&#8203;:contentReference[oaicite:40]{index=40}
-
-4. **Model Interpretation:** :contentReference[oaicite:41]{index=41}&#8203;:contentReference[oaicite:42]{index=42}
-
-## Model Comparison
-
-:contentReference[oaicite:43]{index=43}&#8203;:contentReference[oaicite:44]{index=44}
-
-| Model                               | Accuracy | AUC   | Recall | Precision | F1 Score | Kappa  | MCC    | Training Time (Sec) |
-|-------------------------------------|----------|-------|--------|-----------|----------|--------|--------|---------------------|
-| **CatBoost Classifier**             | 0.8482   | 0.8144| 0.9325 | 0.8483    | 0.8884   | 0.6527 | 0.6598 | 24.010              |
-| **LightGBM**                        | 0.8475   | 0.8134| 0.9323 | 0.8476    | 0.8879   | 0.6510 | 0.6582 | 1.901               |
-| **XGBoost**                         | 0.8473   | 0.8143| 0.9324 | 0.8474    | 0.8878   | 0.6506 | 0.6579 | 2.609               |
-| **Gradient Boosting Classifier**    | 0.8360   | 0.8134| 0.9340 | 0.8331    | 0.8807   | 0.6211 | 0.6316 | 13.490              |
-| **Random Forest Classifier**        | 0.8101   | 0.8039| 0.8860 | 0.8319    | 0.8581   | 0.5721 | 0.5747 | 12.926              |
-| **AdaBoost Classifier**             | 0.8081   | 0.8099| 0.9282 | 0.8054    | 0.8624   | 0.5506 | 0.5660 | 4.443               |
-| **Logistic Regression**             | 0.7895   | 0.7967| 0.9209 | 0.7894    | 0.8501   | 0.5038 | 0.5210 | 11.703              |
-| **Extra Trees Classifier**          | 0.7862   | 0.7828| 0.8398 | 0.8318    | 0.8358   | 0.5294 | 0.5294 | 13.506              |
-| **K Neighbors Classifier**          | 
-::contentReference[oaicite:45]{index=45}
- 
+---
