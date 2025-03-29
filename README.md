@@ -69,6 +69,18 @@ A scoring system was created based on:
 
 ---
 
+## 📊 Data Visualizations
+
+- **Income** and **Age** correlation with approval of credit card visualized.
+- The Bar-graph along with trendline displays the correlation.
+
+![Screenshot 2025-03-29 141112](https://github.com/user-attachments/assets/07f1e0b9-6ded-476e-b665-e5c71b201ac0)
+
+![Screenshot 2025-03-29 163459](https://github.com/user-attachments/assets/b8f18b2c-369c-42b9-b79f-220ac952dd1f)
+
+
+---
+
 ## 🤖 Machine Learning Approach
 
 ### ✔ Tools Used
