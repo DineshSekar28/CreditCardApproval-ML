@@ -1,6 +1,9 @@
 import pandas as pd
 import numpy as np
 from scipy.stats import zscore
+from src.custom_scoring import custom_scoring
+
+
 
 def data_cleaning(df):
     # Find and clean duplicates from unique ID column
@@ -44,5 +47,7 @@ def data_cleaning(df):
     # Insert WORK_EXPERIENCE after DAYS_EMPLOYED
     employed_index = df.columns.get_loc('DAYS_EMPLOYED')
     df.insert(employed_index + 1, 'WORK_EXPERIENCE', work_exp)
+
+    df = custom_scoring(df)
 
     return df

@@ -41,7 +41,7 @@ def summarize_data(df):
     valid_columns = std_devs[std_devs > variance_threshold].index
     filtered_numerical_columns = numerical_columns[valid_columns].drop(columns=["ID"], errors="ignore")
 
-    print("\n📌 Outlier count per column (Z-Score > 3):")
+    print("\n Outlier count per column (Z-Score > 3):")
 
     for column in filtered_numerical_columns.columns:
         z_scores = np.abs(zscore(filtered_numerical_columns[column], nan_policy='omit'))
@@ -50,4 +50,4 @@ def summarize_data(df):
         top_outliers = outlier_values.iloc[np.argsort(-z_scores[outlier_values.index])].head(10)
         print(f"🔹 {column}: {outlier_count} outliers")
         if outlier_count > 0:
-            print(f"   ⚠️ Sample Outliers: {top_outliers.tolist()}\n")
+            print(f" Sample Outliers: {top_outliers.tolist()}\n")
