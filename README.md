@@ -1,10 +1,10 @@
-# 💳 Credit Card Approval Prediction
+# Credit Card Approval Prediction
 
 A comprehensive project to build a credit card approval prediction system using machine learning, domain-driven credit scoring, and AutoML. The solution includes complete data preprocessing, synthetic target generation, exploratory data analysis, model selection via PyCaret, and performance evaluation.
 
 ---
 
-## 📚 Table of Contents
+##  Table of Contents
 
 1. [Project Objective](#project-objective)
 2. [Initial Hypotheses](#initial-hypotheses)
@@ -15,17 +15,18 @@ A comprehensive project to build a credit card approval prediction system using 
 7. [Data Visualization (Tableau)](#data-visualization-tableau)
 8. [Machine Learning Workflow](#machine-learning-workflow)
 9. [Model Performance](#model-performance)
-10. [Technologies Used](#technologies-used)
+10. [Interactive GUI with Streamlit](#interactive-gui-with-streamlit)
+11. [Technologies Used](#technologies-used)
 
 ---
 
-## 🎯 Project Objective
+##  Project Objective
 
 Credit institutions need efficient and reliable ways to assess credit card applications. This project builds a predictive system using custom scoring logic, domain features, and AutoML to simulate approval decisions (`TARGET = 1`) or rejections (`TARGET = 0`).
 
 ---
 
-## 🧪 Initial Hypotheses
+##  Initial Hypotheses
 
 - Higher income and higher education positively affect approval chances.
 - Owning property and having fewer dependents signals financial stability.
@@ -33,7 +34,7 @@ Credit institutions need efficient and reliable ways to assess credit card appli
 
 ---
 
-## 📂 Dataset Overview
+##  Dataset Overview
 
 The dataset includes demographic, financial, and employment-related attributes of credit card applicants.
 
@@ -49,20 +50,20 @@ The dataset includes demographic, financial, and employment-related attributes o
 | `CNT_FAM_MEMBERS`     | Family size                                     |
 | `FLAG_OWN_CAR`        | Owns a car (Y/N)                                |
 | `FLAG_OWN_REALTY`     | Owns real estate (Y/N)                          |
-| `OCCUPATION_TYPE`     | Job type                                       |
+| `OCCUPATION_TYPE`     | Job type                                        |
 
 ---
 
-## 🔧 Data Preprocessing
+##  Data Preprocessing
 
 - Converted `DAYS_BIRTH` and `DAYS_EMPLOYED` to `AGE` and `WORK_EXPERIENCE` (years)
 - Replaced invalid employment durations (365243) with median of negative values
-- Filled missing `OCCUPATION_TYPE` with "NA"
+- Filled missing `OCCUPATION_TYPE` with `"NA"`
 - Cleaned categorical values by removing special characters and normalizing spaces (for encoding compatibility)
 
 ---
 
-## 🧠 Custom Credit Scoring
+##  Custom Credit Scoring
 
 A rule-based scoring engine was developed using domain knowledge.
 
@@ -85,7 +86,7 @@ The final `CREDIT_SCORE` was computed by summing all component scores.
 
 ---
 
-## 📊 Exploratory Data Analysis (EDA)
+##  Exploratory Data Analysis (EDA)
 
 - Income distribution skewed toward lower buckets (<200K)
 - Majority of applicants fall between ages 25 and 60
@@ -95,7 +96,7 @@ The final `CREDIT_SCORE` was computed by summing all component scores.
 
 ---
 
-## 📉 Data Visualization (Tableau)
+##  Data Visualization (Tableau)
 
 Interactive visualizations built with Tableau to explore key patterns:
 
@@ -110,21 +111,23 @@ Interactive visualizations built with Tableau to explore key patterns:
 
 ---
 
-## 🤖 Machine Learning Workflow
+##  Machine Learning Workflow
 
 - Setup done via **PyCaret**
 - Ignored: `ID`, `CREDIT_SCORE`
 - Enabled: Feature selection, multicollinearity removal
 - Models trained: LightGBM, CatBoost, XGBoost, Logistic Regression, etc.
 - Tuning: Used `tune_model()` to optimize hyperparameters (F1 Score)
-- Final model: User-selected model (not necessarily AutoML winner)
-- After comparing the top-performing models using PyCaret AutoML, the developer is given the option to **manually select** the model to use for training and tuning.
-- This ensures flexibility and control, allowing the user to go beyond just the top-ranked model and choose based on speed, interpretability, or domain preference.
+
+###  Dynamic Model Selection
+- After comparing top-performing models using PyCaret AutoML, the developer is **prompted to manually select** a model for training and tuning.
+- This offers flexibility to prioritize speed, interpretability, or compatibility with deployment pipelines, rather than just relying on AutoML's top performer.
+
 - Evaluation: Predictions made on hold-out test set
 
 ---
 
-## 🧪 Model Performance
+##  Model Performance
 
 | Model                         | Accuracy | AUC   | Recall | Precision | F1 Score | MCC   | Kappa | Time (s) |
 |------------------------------|----------|-------|--------|-----------|----------|-------|--------|----------|
@@ -136,36 +139,35 @@ Interactive visualizations built with Tableau to explore key patterns:
 | Logistic Regression          | 0.7895   | 0.796 | 0.9209 | 0.7894    | 0.8501   | 0.5210 | 0.5038 | 11.70    |
 | Dummy Classifier (baseline)  | 0.6480   | 0.500 | 1.0000 | 0.6480    | 0.7864   | 0.0000 | 0.0000 | 1.17     |
 
-**Note:** Although **CatBoost Classifier** achieved the **highest F1 score and accuracy**, the final model chosen was **LightGBM** due to its:
+ **Note:** Although **CatBoost Classifier** achieved the **highest F1 score and accuracy**, the final model chosen was **LightGBM** due to its:
 
 - **Comparable performance metrics**
 - **Significantly faster training time** (1.9s vs 24.01s)
-- Better suitability for deployment scenarios where speed and efficiency are critical.
+- Better suitability for deployment scenarios where speed and efficiency are critical
 
-> ![Screenshot 2025-03-31 001322](https://github.com/user-attachments/assets/5998cecc-dbe5-477c-ac00-875eb182ffe6)
-
----
-
-## 🖥️ Interactive GUI with Streamlit
-
-A user-friendly **Streamlit web interface** was developed to simulate real-world credit approval interaction.
-
-- Users can input their personal, financial, and demographic details such as income, education, occupation, age, and more.
-- The trained ML model is loaded behind the scenes using PyCaret and predicts whether the credit card application is likely to be **approved or rejected**.
-- Based on the prediction, the user sees an immediate visual response with a success or rejection message.
-  **SCENARIOS:**
-
- > ![Screenshot 2025-03-31 010819](https://github.com/user-attachments/assets/4864fa3b-6336-4165-b6b3-7accb5f36253)
-
- > ![Screenshot 2025-03-31 010950](https://github.com/user-attachments/assets/d4860fad-941f-405e-b9ca-72fe7e454193)
-
-
-
-> This makes the solution accessible even to non-technical stakeholders, mimicking a bank’s approval tool.
+> ![Model Metrics](https://github.com/user-attachments/assets/5998cecc-dbe5-477c-ac00-875eb182ffe6)
 
 ---
 
-## 🛠 Technologies Used
+## Interactive GUI with Streamlit
+
+A user-friendly **Streamlit web interface** was developed to simulate real-world credit approval screening.
+
+- Users input their details such as income, education, family size, age, work experience, and property ownership.
+- These inputs are passed into the trained **LightGBM model**, which predicts the likelihood of credit approval.
+- Visual output is shown using Streamlit components (green for approval, red for rejection).
+
+### Example Scenarios:
+
+> ![Rejected Example](https://github.com/user-attachments/assets/4864fa3b-6336-4165-b6b3-7accb5f36253)
+
+> ![Approved Example](https://github.com/user-attachments/assets/d4860fad-941f-405e-b9ca-72fe7e454193)
+
+This interface makes the solution accessible to **non-technical users**, closely resembling an actual **bank loan approval dashboard**.
+
+---
+
+## Technologies Used
 
 - **Python 3.10**
 - **PyCaret 3.x**
@@ -173,10 +175,10 @@ A user-friendly **Streamlit web interface** was developed to simulate real-world
 - **pandas / numpy**
 - **Tableau Public** (for dashboarding)
 - **LightGBM / CatBoost / XGBoost**
-- **Streamlit**(for Graphical User Interface)
+- **Streamlit** (for graphical user interface)
 
 ---
 
-## 📌 Conclusion
+## Conclusion
 
-This project simulates a real-world credit approval pipeline using domain logic, clean preprocessing, robust visualization, and AutoML. By building both a **credit scoring engine** and a **predictive model**, the project ensures interpretability and accuracy — both critical in financial services.
+This project simulates a real-world credit approval pipeline using domain logic, clean preprocessing, strong visualizations, and AutoML. By combining a **rule-based credit scoring engine** with a **machine learning prediction model**, it ensures interpretability and high performance.
