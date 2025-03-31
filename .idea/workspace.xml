@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aef9eb20-b84d-4f82-bf84-77cb146cf6b1" name="Changes" comment="Data processing completed">
-      <change afterPath="$PROJECT_DIR$/src/custom_scoring.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/randomFlip.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/train_model.py" afterDir="false" />
+    <list default="true" id="aef9eb20-b84d-4f82-bf84-77cb146cf6b1" name="Changes" comment="Random flips and realistic target generation">
+      <change afterPath="$PROJECT_DIR$/src/interface.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data_preprocessing.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/data_preprocessing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/explore_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/explore_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/source_validation.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/source_validation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/train_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/train_model.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,13 +50,14 @@
   "keyToString": {
     "Python.data_preprocessing.executor": "Run",
     "Python.explore_data.executor": "Run",
+    "Python.interface.executor": "Run",
     "Python.main.executor": "Run",
     "Python.source_validation.executor": "Run",
     "Python.train_model.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
-    "settings.editor.selected.configurable": "settings.sync"
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -93,11 +90,20 @@
       <option name="project" value="LOCAL" />
       <updated>1743125901283</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Random flips and realistic target generation">
+      <option name="closed" value="true" />
+      <created>1743225410646</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1743225410646</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Data processing completed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Data processing completed" />
+    <MESSAGE value="Random flips and realistic target generation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Random flips and realistic target generation" />
   </component>
 </project>
