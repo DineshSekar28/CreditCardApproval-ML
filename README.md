@@ -118,6 +118,8 @@ Interactive visualizations built with Tableau to explore key patterns:
 - Models trained: LightGBM, CatBoost, XGBoost, Logistic Regression, etc.
 - Tuning: Used `tune_model()` to optimize hyperparameters (F1 Score)
 - Final model: User-selected model (not necessarily AutoML winner)
+- After comparing the top-performing models using PyCaret AutoML, the developer is given the option to **manually select** the model to use for training and tuning.
+- This ensures flexibility and control, allowing the user to go beyond just the top-ranked model and choose based on speed, interpretability, or domain preference.
 - Evaluation: Predictions made on hold-out test set
 
 ---
@@ -134,6 +136,33 @@ Interactive visualizations built with Tableau to explore key patterns:
 | Logistic Regression          | 0.7895   | 0.796 | 0.9209 | 0.7894    | 0.8501   | 0.5210 | 0.5038 | 11.70    |
 | Dummy Classifier (baseline)  | 0.6480   | 0.500 | 1.0000 | 0.6480    | 0.7864   | 0.0000 | 0.0000 | 1.17     |
 
+**Note:** Although **CatBoost Classifier** achieved the **highest F1 score and accuracy**, the final model chosen was **LightGBM** due to its:
+
+- **Comparable performance metrics**
+- **Significantly faster training time** (1.9s vs 24.01s)
+- Better suitability for deployment scenarios where speed and efficiency are critical.
+
+> ![Screenshot 2025-03-31 001322](https://github.com/user-attachments/assets/5998cecc-dbe5-477c-ac00-875eb182ffe6)
+
+---
+
+## 🖥️ Interactive GUI with Streamlit
+
+A user-friendly **Streamlit web interface** was developed to simulate real-world credit approval interaction.
+
+- Users can input their personal, financial, and demographic details such as income, education, occupation, age, and more.
+- The trained ML model is loaded behind the scenes using PyCaret and predicts whether the credit card application is likely to be **approved or rejected**.
+- Based on the prediction, the user sees an immediate visual response with a success or rejection message.
+  **SCENARIOS:**
+
+ > ![Screenshot 2025-03-31 010819](https://github.com/user-attachments/assets/4864fa3b-6336-4165-b6b3-7accb5f36253)
+
+ > ![Screenshot 2025-03-31 010950](https://github.com/user-attachments/assets/d4860fad-941f-405e-b9ca-72fe7e454193)
+
+
+
+> This makes the solution accessible even to non-technical stakeholders, mimicking a bank’s approval tool.
+
 ---
 
 ## 🛠 Technologies Used
@@ -144,14 +173,10 @@ Interactive visualizations built with Tableau to explore key patterns:
 - **pandas / numpy**
 - **Tableau Public** (for dashboarding)
 - **LightGBM / CatBoost / XGBoost**
+- **Streamlit**(for Graphical User Interface)
 
 ---
 
 ## 📌 Conclusion
 
 This project simulates a real-world credit approval pipeline using domain logic, clean preprocessing, robust visualization, and AutoML. By building both a **credit scoring engine** and a **predictive model**, the project ensures interpretability and accuracy — both critical in financial services.
-
-**Next Steps:**
-- Deploy model as REST API or Streamlit App
-- Integrate dashboard for real-time analysis
-- Monitor model performance over time using SHAP and drift detection
