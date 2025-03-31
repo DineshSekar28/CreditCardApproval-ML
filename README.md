@@ -1,10 +1,10 @@
-# Credit Card Approval Prediction
+# 💳 Credit Card Approval Prediction
 
 A comprehensive project to build a credit card approval prediction system using machine learning, domain-driven credit scoring, and AutoML. The solution includes complete data preprocessing, synthetic target generation, exploratory data analysis, model selection via PyCaret, and performance evaluation.
 
 ---
 
-##  Table of Contents
+## 📚 Table of Contents
 
 1. [Project Objective](#project-objective)
 2. [Initial Hypotheses](#initial-hypotheses)
@@ -20,13 +20,13 @@ A comprehensive project to build a credit card approval prediction system using 
 
 ---
 
-##  Project Objective
+## 🎯 Project Objective
 
 Credit institutions need efficient and reliable ways to assess credit card applications. This project builds a predictive system using custom scoring logic, domain features, and AutoML to simulate approval decisions (`TARGET = 1`) or rejections (`TARGET = 0`).
 
 ---
 
-##  Initial Hypotheses
+## 🧪 Initial Hypotheses
 
 - Higher income and higher education positively affect approval chances.
 - Owning property and having fewer dependents signals financial stability.
@@ -34,7 +34,7 @@ Credit institutions need efficient and reliable ways to assess credit card appli
 
 ---
 
-##  Dataset Overview
+## 📂 Dataset Overview
 
 The dataset includes demographic, financial, and employment-related attributes of credit card applicants.
 
@@ -54,7 +54,7 @@ The dataset includes demographic, financial, and employment-related attributes o
 
 ---
 
-##  Data Preprocessing
+## 🔧 Data Preprocessing
 
 - Converted `DAYS_BIRTH` and `DAYS_EMPLOYED` to `AGE` and `WORK_EXPERIENCE` (years)
 - Replaced invalid employment durations (365243) with median of negative values
@@ -63,7 +63,7 @@ The dataset includes demographic, financial, and employment-related attributes o
 
 ---
 
-##  Custom Credit Scoring
+## 🧠 Custom Credit Scoring
 
 A rule-based scoring engine was developed using domain knowledge.
 
@@ -86,7 +86,7 @@ The final `CREDIT_SCORE` was computed by summing all component scores.
 
 ---
 
-##  Exploratory Data Analysis (EDA)
+## 📊 Exploratory Data Analysis (EDA)
 
 - Income distribution skewed toward lower buckets (<200K)
 - Majority of applicants fall between ages 25 and 60
@@ -96,7 +96,7 @@ The final `CREDIT_SCORE` was computed by summing all component scores.
 
 ---
 
-##  Data Visualization (Tableau)
+## 📉 Data Visualization (Tableau)
 
 Interactive visualizations built with Tableau to explore key patterns:
 
@@ -111,7 +111,7 @@ Interactive visualizations built with Tableau to explore key patterns:
 
 ---
 
-##  Machine Learning Workflow
+## 🤖 Machine Learning Workflow
 
 - Setup done via **PyCaret**
 - Ignored: `ID`, `CREDIT_SCORE`
@@ -119,7 +119,7 @@ Interactive visualizations built with Tableau to explore key patterns:
 - Models trained: LightGBM, CatBoost, XGBoost, Logistic Regression, etc.
 - Tuning: Used `tune_model()` to optimize hyperparameters (F1 Score)
 
-###  Dynamic Model Selection
+### 🧠 Dynamic Model Selection
 - After comparing top-performing models using PyCaret AutoML, the developer is **prompted to manually select** a model for training and tuning.
 - This offers flexibility to prioritize speed, interpretability, or compatibility with deployment pipelines, rather than just relying on AutoML's top performer.
 
@@ -127,7 +127,7 @@ Interactive visualizations built with Tableau to explore key patterns:
 
 ---
 
-##  Model Performance
+## 🧪 Model Performance
 
 | Model                         | Accuracy | AUC   | Recall | Precision | F1 Score | MCC   | Kappa | Time (s) |
 |------------------------------|----------|-------|--------|-----------|----------|-------|--------|----------|
@@ -139,7 +139,7 @@ Interactive visualizations built with Tableau to explore key patterns:
 | Logistic Regression          | 0.7895   | 0.796 | 0.9209 | 0.7894    | 0.8501   | 0.5210 | 0.5038 | 11.70    |
 | Dummy Classifier (baseline)  | 0.6480   | 0.500 | 1.0000 | 0.6480    | 0.7864   | 0.0000 | 0.0000 | 1.17     |
 
- **Note:** Although **CatBoost Classifier** achieved the **highest F1 score and accuracy**, the final model chosen was **LightGBM** due to its:
+📌 **Note:** Although **CatBoost Classifier** achieved the **highest F1 score and accuracy**, the final model chosen was **LightGBM** due to its:
 
 - **Comparable performance metrics**
 - **Significantly faster training time** (1.9s vs 24.01s)
@@ -149,7 +149,7 @@ Interactive visualizations built with Tableau to explore key patterns:
 
 ---
 
-## Interactive GUI with Streamlit
+## 🖥️ Interactive GUI with Streamlit
 
 A user-friendly **Streamlit web interface** was developed to simulate real-world credit approval screening.
 
@@ -157,17 +157,17 @@ A user-friendly **Streamlit web interface** was developed to simulate real-world
 - These inputs are passed into the trained **LightGBM model**, which predicts the likelihood of credit approval.
 - Visual output is shown using Streamlit components (green for approval, red for rejection).
 
-### Example Scenarios:
+### ✨ Example Scenarios:
 
 > ![Rejected Example](https://github.com/user-attachments/assets/4864fa3b-6336-4165-b6b3-7accb5f36253)
 
 > ![Approved Example](https://github.com/user-attachments/assets/d4860fad-941f-405e-b9ca-72fe7e454193)
 
-This interface makes the solution accessible to **non-technical users**, closely resembling an actual **bank loan approval dashboard**.
+🔍 This interface makes the solution accessible to **non-technical users**, closely resembling an actual **bank loan approval dashboard**.
 
 ---
 
-## Technologies Used
+## 🛠 Technologies Used
 
 - **Python 3.10**
 - **PyCaret 3.x**
@@ -179,6 +179,8 @@ This interface makes the solution accessible to **non-technical users**, closely
 
 ---
 
-## Conclusion
+## 📌 Conclusion
 
 This project simulates a real-world credit approval pipeline using domain logic, clean preprocessing, strong visualizations, and AutoML. By combining a **rule-based credit scoring engine** with a **machine learning prediction model**, it ensures interpretability and high performance.
+
+
