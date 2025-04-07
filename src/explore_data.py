@@ -6,13 +6,15 @@ from scipy.stats import zscore
 # Load dataset
 
 def summarize_data(df):
+    #Understanding data columns and datatypes
     print("Dataset Info:")
     print(df.info())
-    print("\nFirst 5 rows:")
-    print(df.head())
+    # getting stats for
     print("\nSummary statistics:")
     summary_stats = df.describe()
     summary_stats.loc["median"] = df.median(numeric_only=True)
+    print(summary_stats.round(2))
+
     print("\nMissing values:")
     print(df.isnull().sum())
 

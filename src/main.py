@@ -1,4 +1,3 @@
-import pandas as pd
 import os
 from pathlib import Path
 from src.source_validation import load_data
@@ -14,7 +13,7 @@ def main():
     choice = input("Enter 1 or 2: ").strip()
 
     if choice == "1":
-        file_path = "../Data/CreditCardApproval.csv"  # Update if needed
+        file_path = "../Data/CreditCardApproval.csv"  #Path of DataSource
         df = load_data(file_path)
 
         if df is None:
