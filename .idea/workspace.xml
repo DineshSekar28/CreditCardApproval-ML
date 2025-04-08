@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aef9eb20-b84d-4f82-bf84-77cb146cf6b1" name="Changes" comment="Random flips and realistic target generation">
+    <list default="true" id="aef9eb20-b84d-4f82-bf84-77cb146cf6b1" name="Changes" comment="Additional enhancements on AutoML model selection">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/explore_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/explore_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/logs.log" beforeDir="false" afterPath="$PROJECT_DIR$/src/logs.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/train_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/train_model.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +124,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743225410646</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Additional enhancements on AutoML model selection">
+      <option name="closed" value="true" />
+      <created>1743996434752</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1743996434752</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -145,6 +149,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Data processing completed" />
     <MESSAGE value="Random flips and realistic target generation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Random flips and realistic target generation" />
+    <MESSAGE value="Additional enhancements on AutoML model selection" />
+    <option name="LAST_COMMIT_MESSAGE" value="Additional enhancements on AutoML model selection" />
   </component>
 </project>
